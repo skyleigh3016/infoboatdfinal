@@ -2,8 +2,8 @@
 @section('title')
     Notices
 @endsection
-<?php $menu = 'Admin & Users';
-$submenu = 'Users'; ?>
+<?php $menu = 'Edit Admin';
+$submenu = 'admin'; ?>
 
 @section('content')
    
@@ -247,113 +247,69 @@ $(document).ready(function()
  });
 });
 </script>
+<div class="py-12"> 
+   <div class="container">
+    <div class="row">
 
-<div class="py-12">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-      <h2 style = >Manage <b>Users</b></h2>
-     </div>
-     <div class="col-sm-6">
-        
-      <a href="#addEmployeeModal" class="btn  btn-primary btn-sm" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
-      </div>
-                </div>
-            </div>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th hidden scope="col" width="5%">id</th>
-                        <th scope="col" width="20%">Name</th>
-                        <th scope="col" width="35%">Email</th>
-                        <th scope="col" width="30%">Avatar</th>
-                        <th scope="col" width="10%">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($users as $user)
-                    <tr>
-    <td class = "id" hidden>{{ $user -> id }}</td>
-    <td class = "name">{{ $user -> name }}</td>
-    <td class = "email">{{ $user -> email }}</td>
-    <td class = "image"><img src="{{ asset('images/users') . '/' . $user->user_image }}" class="img img-responsive" style="hight:120px; width:120px;"></td>
-    
-   
-    <td class="d-flex justify-content-center">
+ 
 
-    <a href="{{url('user/edit/'.$user->id)}}" class="btn btn-primary mr-1 px-1 py-0 "><i class="bi bi-pencil-square"  data-toggle="tooltip"></i></a>
 
-<!-- <button type="button" class="btn btn-primary mr-1 px-1 py-0 edit3" data-bs-target="{{ '#editEmployeeModal' . $user->id }}" data-target="#editEmployeeModal" data-toggle="modal"
->
-    <i class="bi bi-pencil-square" data-toggle="tooltip" ></i>
-</button> -->
-<!-- noticecontroller the logic to delete -->
-<form action="{{ route('hsc.destroy', $user->id) }}" method="post">
-    @csrf
-    <input type="hidden" name="_method" value="DELETE">
-    <button type="submit" class="btn btn-danger delete px-1 py-0"><i
-            class="bi bi-trash"></i></button>
-</form>
-</td>
-    
-    
+    <div class="col-md-12">
+     <div class="card">
+          <div class="card-body">
+          
+          
+         
+     <form action="{{route('update.announcement')}}" method="POST" enctype="multipart/form-data">
+          @csrf 
 
-                        
-                    </tr>
-                    <tr>
-      <td>
-       
-                    </tr> 
-                    @endforeach
-                </tbody>
-            </table>
-  
-        </div>
-    </div>
- <!-- Add Modal HTML -->
- <div id="addEmployeeModal" class="modal fade">
-  <div class="modal-dialog modal-dialog-scrollable">
-   <div class="modal-content">
-    <form action="{{route('user.insert')}}" method="POST" enctype="multipart/form-data">
-    @csrf 
-     <input type="text" hidden id = "id" name = "id" value = "">  
-     <div class="modal-header popupheader">      
-      <h4 class="modal-title">Add User</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-     </div>
-     <div class="modal-body">     
-      <div class="form-group">
-       <label>Name</label>
-       <input type="text" name ="name" class="form-control" required>
-      </div>
-     
-      <div class="form-group">
-       <label>Email</label>
-       <input type="text" name ="email" class="form-control" required>
-      </div>
-      <div class="form-group">
-       <label>Password</label>
-       <input type="password" name ="password" class="form-control" required>
-      </div>
-      
-      <div class="form-group">
-       <label>Avatar</label>
-       <input type="file" name ="user_image" class="form-control" required>
-      </div>  
-     </div>
-     
-     <div class="modal-footer">
-      <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-      <input type="submit" class="btn btn-success" value="Add">
-     </div>
-    </form>
-   </div>
+          <input type="hidden" value="{{$announcements->id}}" name="id">
+
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Title</label>
+    <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $announcements->title}}">
   </div>
- </div>
+  
+  <!-- <div class="form-group">
+    <label for="exampleInputEmail1">Description</label>
+    <input type="email" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $announcements->description}}">
+  </div> -->
+  <div class="form-group">
+    <input type="text" hidden name="role" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $announcements->image}}">
+    <!-- <img src="{{ asset('images/users') . '/' . $announcements->image }}" style="width:500px; height:300px;" > -->
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Description</label>
+    <textarea type="file" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">{{ $announcements->description}}</textarea>
+    <!-- <img src="{{asset($announcements->image)}}" style="width:500px; height:300px;" > -->
+  </div>
 
- <!-- edit Modal HTML  -->
- 
+  <div class="form-group">
+  <label for="exampleInputEmail1">Announcement</label>
+  <input type="text" name="role" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+     <img src="{{asset($announcements->image)}}" style="width:400px; height:400px;" >
+
+     </div>
+
+
+     
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+       </div>
+
+    </div>
+  </div> 
  
 
+
+    </div>
+  </div> 
+
+    </div>
+        
+      
+
+    
 @endsection
