@@ -12,3 +12,4 @@ Project live server link: http://amar-college.herokuapp.com/public/
 "# sociaboard" 
 "# infoboard" 
 "# infoboatdfinal" 
+"# infoboatdfinal" 
